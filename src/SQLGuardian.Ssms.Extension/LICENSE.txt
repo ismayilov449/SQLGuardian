@@ -1,0 +1,10 @@
+Copyright (c) 2026 SQLGuardian. All rights reserved.
+
+This software and associated documentation files (the "Software") are proprietary.
+Unauthorized copying, modification, distribution, or use of the Software, in whole
+or in part, is prohibited without prior written permission from the copyright holder.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT HOLDER
+BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM USE OF THE SOFTWARE.

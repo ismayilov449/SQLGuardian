@@ -40,6 +40,14 @@ New-Item -ItemType Directory -Force -Path $stage | Out-Null
 Copy-Item $dll $stage
 Copy-Item (Join-Path $root "src\SQLGuardian.Ssms.Extension\SQLGuardian.Ssms.Extension.pkgdef") $stage -Force
 
+$icon = Join-Path $root "src\SQLGuardian.Ssms.Extension\Resources\Icon.png"
+if (-not (Test-Path $icon)) { throw "Extension icon missing at $icon" }
+Copy-Item $icon (Join-Path $stage "Icon.png") -Force
+
+$license = Join-Path $root "src\SQLGuardian.Ssms.Extension\LICENSE.txt"
+if (-not (Test-Path $license)) { throw "Extension license missing at $license" }
+Copy-Item $license (Join-Path $stage "LICENSE.txt") -Force
+
 # Manifest without XML declaration (matches VSSDK detokenized output).
 $utf8NoBom = New-Object System.Text.UTF8Encoding $false
 $manifestText = [System.IO.File]::ReadAllText($manifestSrc)

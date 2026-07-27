@@ -8,7 +8,7 @@ using Task = System.Threading.Tasks.Task;
 namespace SQLGuardian.Ssms.Extension;
 
 [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-[InstalledProductRegistration("SQLGuardian for SSMS", "Deterministic T-SQL static analysis in the Error List", "0.1.8")]
+[InstalledProductRegistration("SQLGuardian for SSMS", "Deterministic T-SQL static analysis in the Error List", "0.1.10")]
 [ProvideMenuResource("Menus.ctmenu", 1)]
 [Guid(PackageGuids.PackageString)]
 [ProvideOptionPage(typeof(GeneralOptionPage), "SQLGuardian", "General", 0, 0, true)]

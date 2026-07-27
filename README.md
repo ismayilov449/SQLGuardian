@@ -105,4 +105,4 @@ See [schema-aware analysis](docs/schema-aware.md). CLI `--connection` flags rema
 
 ## License
 
-Proprietary / TBD.
+Proprietary. See [LICENSE.txt](LICENSE.txt).

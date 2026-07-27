@@ -1,81 +1,120 @@
-# SQLGuardian SSMS Extension (Error List)
+# SQLGuardian for SSMS
 
-Native SSMS 21+ integration: analyze the active query window and push findings into the **Error List**. Double-click jumps to the line in the script.
+**Catch risky or expensive T-SQL before it runs** — then review the rest of your script in the familiar **Error List**.
 
-This is Phase 1 of the SSMS-native track. The WPF companion remains available for catalog scan / batch folders.
+SQLGuardian works inside **SQL Server Management Studio 21+**. It uses the same deterministic rules as the `sqlguardian` CLI: no AI guesses, same findings every time.
 
-## Build the VSIX
+| Who you are | What you get |
+|-------------|--------------|
+| **Developer** | Static analysis in the Error List, double-click to jump to the line, keyboard shortcut |
+| **Data analyst** | Warnings about `SELECT *`, large tables, and costly patterns before a query hammers production |
+| **Business analyst** | A safety net before Execute: missing `WHERE` on updates/deletes, and large-table / large-join prompts |
+
+---
+
+## Install (about 2 minutes)
+
+1. [Download the latest `.vsix`](https://www.vsixgallery.com/extension/SQLGuardian.Ssms.Extension.7c2e9a1b-4d5f-4a8e-9b3c-1f0e6d8a2c44).
+2. **Close SSMS completely.**
+3. Install with the **SSMS** VSIX installer (not the Visual Studio one):
+
+```bat
+"%ProgramFiles%\Microsoft SQL Server Management Studio 21\Release\Common7\IDE\VSIXInstaller.exe" SQLGuardian.Ssms.Extension.vsix
+```
+
+4. Open SSMS again.
+
+> If double-clicking the `.vsix` opens Visual Studio and fails, use the command above instead.
+
+---
+
+## How to use it
+
+### Analyze the script you are editing
+
+1. Open a query window (`.sql`).
+2. Press **Ctrl+Shift+G**, or choose **Tools → SQLGuardian — Analyze Active Script (Error List)**.
+3. Open **View → Error List** if it is not visible.
+4. **Double-click** any finding to jump to that line.
+
+Clear previous results anytime with **Tools → SQLGuardian — Clear Findings**.
+
+| Severity in Error List | Typical meaning |
+|------------------------|-----------------|
+| **Error** | High / critical issue — fix or confirm before relying on the script |
+| **Warning** | Performance, style, or risk pattern worth reviewing |
+
+### Analyze automatically after Execute
+
+By default, after **F5** / **Query → Execute**, SQLGuardian re-analyzes the script and refreshes the Error List.
+
+Turn this on or off under **Tools → Options → SQLGuardian → Analysis**.
+
+### Stop dangerous or expensive Execute (guards)
+
+Before Execute runs, SQLGuardian can interrupt risky actions. You choose **Cancel** or continue.
+
+| Guard | When it appears | Why it matters |
+|-------|-----------------|----------------|
+| **Missing WHERE** | `UPDATE` or `DELETE` with no `WHERE` | Can change or wipe an entire table |
+| **Large SELECT** | Unbounded `SELECT` / `SELECT *` on a large table | Can lock, flood the network, or freeze SSMS |
+| **Large JOIN** | Join involving a large table | Can explode row counts and run for a long time |
+
+**Selection tip:** If you highlight a statement and press F5, SSMS (and SQLGuardian) only look at the **selection**. With nothing selected, the **whole window** is checked — so a leftover `SELECT *` above your `UPDATE` can still trigger a large-read warning.
+
+Schema-aware guards (row counts) use your **active SSMS connection**. If that is unavailable, set a fallback under **Tools → Options → SQLGuardian → Connection**.
+
+Large-join dialogs can optionally offer **Apply NOLOCK** (off by default). That can allow dirty reads; treat it as an advanced escape hatch, not a best practice.
+
+---
+
+## What kinds of issues it finds
+
+Examples (not a full list):
+
+- `SELECT *`
+- `UPDATE` / `DELETE` without `WHERE`
+- Leading wildcards in `LIKE` (`'%text'`)
+- `CROSS JOIN`, cursors, `TOP` without `ORDER BY`
+- Other performance and safety rules documented in the [rules catalog](https://github.com/ismayilov449/SQLGuardian/blob/main/docs/rules/README.md)
+
+Findings always point at a **file + line** so you can fix or discuss the exact statement.
+
+---
+
+## Settings at a glance
+
+| Path | What it controls |
+|------|------------------|
+| **Tools → Options → SQLGuardian → Analysis** | Analyze after Execute; execute-guard toggles and thresholds |
+| **Tools → Options → SQLGuardian → Connection** | Fallback server/database when the active connection is missing |
+| **Tools → Options → Environment → Keyboard** | Remap **Ctrl+Shift+G** (`SQLGuardian.AnalyzeActiveScript`) |
+
+---
+
+## Extension vs companion app
+
+| Capability | This SSMS extension | WPF companion |
+|------------|---------------------|---------------|
+| Analyze active script | Yes — Error List | Yes — own results grid |
+| Jump to line in SSMS | Yes | Opens the file externally |
+| Folder / catalog scan | Coming later | Yes today |
+| Install | VSIX (this page) | Separate exe / External Tools |
+
+---
+
+## Build from source (contributors)
 
 ```bat
 scripts\ssms\pack-vsix.cmd
 ```
 
-Output: `artifacts\SQLGuardian.Ssms.Extension.vsix`
+Output: `artifacts\SQLGuardian.Ssms.Extension.vsix`  
+Requires Visual Studio 2022 (MSBuild) and the .NET 9 SDK (bundled CLI).
 
-Requires: Visual Studio 2022 (MSBuild), .NET 9 SDK (for bundled CLI).
+---
 
-## Install into SSMS 21
+## Feedback
 
-Close SSMS first, then install with the **SSMS** installer (not the Visual Studio one from Explorer double-click):
-
-```bat
-"C:\Program Files\Microsoft SQL Server Management Studio 21\Release\Common7\IDE\VSIXInstaller.exe" artifacts\SQLGuardian.Ssms.Extension.vsix
-```
-
-If double-click opens the VS installer and fails with “not a valid VSIX package”, rebuild with `scripts\ssms\pack-vsix.cmd` and use the command above.
-
-Restart SSMS.
-
-## Use it
-
-After install + SSMS restart, open **Tools** and look for these **flat** items (not a nested submenu):
-
-- **SQLGuardian — Analyze Active Script (Error List)**
-- **SQLGuardian — Clear Findings**
-
-They sit on the Tools menu itself (near External Tools). Names include **(Error List)** so they are distinct from any older companion External Tools entries named `SQLGuardian: Analyze Active Script`.
-
-1. Open a `.sql` query window.
-2. Press **Ctrl+Shift+G**, or **Tools → SQLGuardian — Analyze Active Script (Error List)**
-3. Open **View → Error List** if needed (findings appear under **Warnings**, Errors for High/Critical).
-4. Double-click a finding to jump to that line.
-
-Shortcut: **Ctrl+Shift+G** (`SQLGuardian.AnalyzeActiveScript`). Remap under **Tools → Options → Environment → Keyboard** if needed.
-
-**Analyze after Execute (on by default):** after **Query → Execute** / **F5**, SQLGuardian analyzes the active script and updates the Error List. Toggle under **Tools → Options → SQLGuardian → Analysis**.
-
-**Execute guards (on by default):** before **Query → Execute** / **F5**, SQLGuardian can cancel dangerous or expensive scripts:
-
-- **Missing WHERE (SQLG0002):** `UPDATE`/`DELETE` without `WHERE` → critical warning. **Cancel** stops Execute.
-- **Large SELECT:** `SELECT *` or unbounded `SELECT` against a table at/above the row threshold → warning dialog.
-- **Large JOIN:** joins involving a table at/above the row threshold → warning dialog (**Cancel** / **Execute anyway**). Optional advanced setting **Allow NOLOCK quick-fix on large joins** adds an **Apply NOLOCK** button (off by default; dirty reads possible; SQLG0003 still warns in Error List).
-
-Schema-aware guards prefer the **active SSMS connection**. If that is unavailable, SQLGuardian can fall back to a saved profile under **Tools → Options → SQLGuardian → Connection**.
-
-**Execute guards note:** the guard inspects the **selected text** when you highlight a statement before F5 (same as SSMS Execute selection). With no selection, it inspects the **whole query window**, so a leftover `SELECT *` above an `UPDATE`/`DELETE` can still trigger the large-read dialog.
-
-## How it works
-
-```
-SSMS (active document)
-    → Extension command
-    → bundled sqlguardian CLI (--format json)
-    → Error List (ErrorListProvider)
-```
-
-Same RuleEngine as CLI / companion. Detection stays deterministic.
-
-## Next phases
-
-- Apply fix / insert suggested SQL into the editor (Quick Fix)
-- Catalog scan from the extension
-- Lightbulb suggested actions
-
-## Companion vs Extension
-
-| | Extension | Companion (WPF) |
-|--|-----------|-----------------|
-| Analyze active script | Yes (Error List) | Yes (own grid) |
-| Jump to line in SSMS | Yes | Opens file externally |
-| Catalog scan | Later | Yes |
-| Install | VSIX | External Tools / exe |
+- **Source:** [github.com/ismayilov449/SQLGuardian](https://github.com/ismayilov449/SQLGuardian)
+- **Issues:** [github.com/ismayilov449/SQLGuardian/issues](https://github.com/ismayilov449/SQLGuardian/issues)

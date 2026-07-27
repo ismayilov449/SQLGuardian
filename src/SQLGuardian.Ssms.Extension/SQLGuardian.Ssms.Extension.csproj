@@ -38,6 +38,8 @@
 
   <ItemGroup>
     <None Include="source.extension.vsixmanifest" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="Resources\Icon.png" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="LICENSE.txt" CopyToOutputDirectory="PreserveNewest" />
     <VSCTCompile Include="SQLGuardianPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
