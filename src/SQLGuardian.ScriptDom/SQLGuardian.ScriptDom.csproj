@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>SQLGuardian.ScriptDom</RootNamespace>
+    <Description>Microsoft ScriptDom-backed SQL parser. Regex parsing is forbidden.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SqlServer.TransactSql.ScriptDom" Version="170.128.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SQLGuardian.Abstractions\SQLGuardian.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011">
+  <Metadata>
+    <Identity Id="SQLGuardian.Ssms.Extension.7c2e9a1b-4d5f-4a8e-9b3c-1f0e6d8a2c44" Version="0.1.8" Language="en-US" Publisher="SQLGuardian" />
+    <DisplayName>SQLGuardian for SSMS</DisplayName>
+    <Description xml:space="preserve">Analyze the active T-SQL script with SQLGuardian and show findings in the Error List. Double-click a finding to jump to the line. Uses the same RuleEngine as the CLI.</Description>
+    <Tags>SQL, T-SQL, SSMS, Static Analysis, SQLGuardian</Tags>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Ssms" Version="[21.0,23.0)">
+      <ProductArchitecture>amd64</ProductArchitecture>
+    </InstallationTarget>
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" Version="[4.7.2,)" />
+  </Dependencies>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,)" DisplayName="Visual Studio core editor" />
+  </Prerequisites>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.VsPackage" Path="SQLGuardian.Ssms.Extension.pkgdef" />
+  </Assets>
+</PackageManifest>

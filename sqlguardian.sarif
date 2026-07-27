@@ -1,0 +1,9 @@
+C:\Users\Rufat.Ismayilov\Desktop\Projects\SQLGuardian\samples\hello.sql: 0 issue(s), 0 parse error(s)
+C:\Users\Rufat.Ismayilov\Desktop\Projects\SQLGuardian\samples\visitors\columns_and_predicates.sql: 2 issue(s), 0 parse error(s)
+  Medium SQLG0001 L3:8 SELECT * expands to all columns and increases I/O and coupling to table shape.
+  Medium SQLG0005 L5:7 LIKE pattern '%widget%' starts with a wildcard and may prevent index seeks.
+C:\Users\Rufat.Ismayilov\Desktop\Projects\SQLGuardian\samples\visitors\functions_and_indexes.sql: 0 issue(s), 0 parse error(s)
+C:\Users\Rufat.Ismayilov\Desktop\Projects\SQLGuardian\samples\visitors\tables_and_joins.sql: 1 issue(s), 0 parse error(s)
+  Medium SQLG0006 L4:6 CROSS JOIN creates a Cartesian product between row sets.
+
+Analyzed 4 file(s). Issues: 3. Parse errors: 0.

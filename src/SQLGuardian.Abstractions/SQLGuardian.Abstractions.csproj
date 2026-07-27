@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>SQLGuardian.Abstractions</RootNamespace>
+    <Description>Core contracts for SQLGuardian: rules, issues, parser interface.</Description>
+  </PropertyGroup>
+
+</Project>

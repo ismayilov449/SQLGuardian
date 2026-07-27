@@ -1,0 +1,76 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <RootNamespace>SQLGuardian.Ssms.Extension</RootNamespace>
+    <AssemblyName>SQLGuardian.Ssms.Extension</AssemblyName>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <UseWindowsForms>true</UseWindowsForms>
+    <!-- Manual VSIX zip via scripts/ssms/pack-vsix.ps1; avoid SDK CreateVsixContainer. -->
+    <GeneratePkgDefFile>false</GeneratePkgDefFile>
+    <CreateVsixContainer>false</CreateVsixContainer>
+    <DeployExtension>false</DeployExtension>
+    <CopyVsixManifestToOutput>false</CopyVsixManifestToOutput>
+    <CopyBuildOutputToOutputDirectory>true</CopyBuildOutputToOutputDirectory>
+    <CopyOutputSymbolsToOutputDirectory>true</CopyOutputSymbolsToOutputDirectory>
+    <NoWarn>$(NoWarn);NU1603;NU1701;VSTHRD108;VSSDK006</NoWarn>
+    <!-- Keep a single intermediate folder so VSCT .cto and MergeCto agree. -->
+    <AppendTargetFrameworkToIntermediateOutputPath>false</AppendTargetFrameworkToIntermediateOutputPath>
+    <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
+    <BaseIntermediateOutputPath>$(MSBuildProjectDirectory)\obj\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.14.40265" ExcludeAssets="runtime">
+      <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.14.2094" PrivateAssets="all" GeneratePathProperty="true" />
+    <PackageReference Include="System.Text.Json" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="source.extension.vsixmanifest" CopyToOutputDirectory="PreserveNewest" />
+    <VSCTCompile Include="SQLGuardianPackage.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+    </VSCTCompile>
+    <None Include="SQLGuardian.Ssms.Extension.pkgdef" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <!-- VSCT + MergeCtoResource (CreateVsixContainer stays false). PathProperty has no trailing slash. -->
+  <Import Project="$(PkgMicrosoft_VSSDK_BuildTools)\tools\vssdk\Microsoft.VsSDK.targets"
+          Condition="'$(PkgMicrosoft_VSSDK_BuildTools)' != '' And Exists('$(PkgMicrosoft_VSSDK_BuildTools)\tools\vssdk\Microsoft.VsSDK.targets')" />
+
+  <!--
+    MergeCto puts Menus.ctmenu inside _EmptyResource.resources; ProvideMenuResource expects a
+    top-level manifest stream named Menus.ctmenu. Embed the compiled .cto under that name.
+  -->
+  <Target Name="EmbedMenusCtmenu" AfterTargets="VSCTCompile" BeforeTargets="CoreCompile">
+    <Error Condition="!Exists('$(IntermediateOutputPath)SQLGuardianPackage.cto')"
+           Text="VSCT did not produce $(IntermediateOutputPath)SQLGuardianPackage.cto" />
+    <ItemGroup>
+      <EmbeddedResource Include="$(IntermediateOutputPath)SQLGuardianPackage.cto">
+        <LogicalName>Menus.ctmenu</LogicalName>
+        <Type>Non-Resx</Type>
+        <WithCulture>false</WithCulture>
+      </EmbeddedResource>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="PublishCliIntoExtension" AfterTargets="Build">
+    <PropertyGroup>
+      <_CliPublishDir>$(MSBuildProjectDirectory)\bin\$(Configuration)\net472\tools\cli</_CliPublishDir>
+      <_CliProject>$(MSBuildProjectDirectory)\..\SQLGuardian.Cli\SQLGuardian.Cli.csproj</_CliProject>
+    </PropertyGroup>
+    <MakeDir Directories="$(_CliPublishDir)" />
+    <Exec Command="dotnet publish &quot;$(_CliProject)&quot; -c $(Configuration) -f net9.0 --output &quot;$(_CliPublishDir)&quot; --self-contained false -p:UseAppHost=true" />
+  </Target>
+
+</Project>

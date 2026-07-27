@@ -1,0 +1,27 @@
+[$RootKey$\InstalledProducts\SQLGuardianPackage]
+@="SQLGuardian for SSMS"
+"PID"="0.1.8"
+"ProductDetails"="Deterministic T-SQL static analysis in the Error List"
+[$RootKey$\Packages\{a3f7c2d1-8e4b-4f9a-9c1e-2b6d0a5e7f31}]
+@="SQLGuardianPackage"
+"InprocServer32"="$WinDir$\SYSTEM32\MSCOREE.DLL"
+"Class"="SQLGuardian.Ssms.Extension.SQLGuardianPackage"
+"CodeBase"="$PackageFolder$\SQLGuardian.Ssms.Extension.dll"
+"AllowsBackgroundLoad"=dword:00000001
+[$RootKey$\AutoLoadPackages\{d0bb0754-1fc4-4a57-b3e0-f9a4f33820ce}]
+"{a3f7c2d1-8e4b-4f9a-9c1e-2b6d0a5e7f31}"=dword:00000002
+[$RootKey$\AutoLoadPackages\{adfc4e64-0397-11d1-9f4e-00a0c9694082}]
+"{a3f7c2d1-8e4b-4f9a-9c1e-2b6d0a5e7f31}"=dword:00000002
+[$RootKey$\AutoLoadPackages\{f1536ef8-92ec-443c-9ed7-fdadf150da82}]
+"{a3f7c2d1-8e4b-4f9a-9c1e-2b6d0a5e7f31}"=dword:00000002
+[$RootKey$\Menus]
+"{a3f7c2d1-8e4b-4f9a-9c1e-2b6d0a5e7f31}"=", Menus.ctmenu, 1"
+[$RootKey$\ToolsOptionsPages\SQLGuardian]
+@="#0"
+"Package"="{a3f7c2d1-8e4b-4f9a-9c1e-2b6d0a5e7f31}"
+[$RootKey$\ToolsOptionsPages\SQLGuardian\General]
+@="#0"
+"Package"="{a3f7c2d1-8e4b-4f9a-9c1e-2b6d0a5e7f31}"
+"Page"="{ce1eea61-e087-365f-b3da-cbc0c58a01d5}"
+"IsServerAware"=dword:00000000
+"IsInUnifiedSettings"=dword:00000000

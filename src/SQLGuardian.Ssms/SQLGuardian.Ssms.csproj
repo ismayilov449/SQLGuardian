@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>SQLGuardian.Ssms</RootNamespace>
+    <AssemblyName>SQLGuardian.Ssms</AssemblyName>
+    <ApplicationTitle>SQLGuardian</ApplicationTitle>
+    <Description>Desktop companion: scan SQL Server catalogs and analyze T-SQL with the shared RuleEngine.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SQLGuardian.RuleEngine\SQLGuardian.RuleEngine.csproj" />
+    <ProjectReference Include="..\SQLGuardian.Reporting\SQLGuardian.Reporting.csproj" />
+    <ProjectReference Include="..\SQLGuardian.Abstractions\SQLGuardian.Abstractions.csproj" />
+    <ProjectReference Include="..\SQLGuardian.Domain\SQLGuardian.Domain.csproj" />
+    <ProjectReference Include="..\SQLGuardian.Schema\SQLGuardian.Schema.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>SQLGuardian.Domain</RootNamespace>
+    <Description>Domain models: rule metadata, configuration, analysis reports.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SQLGuardian.Abstractions\SQLGuardian.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

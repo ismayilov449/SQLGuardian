@@ -1,0 +1,6 @@
+{
+  "SelectStarRule": "Warning",
+  "SQLG0003": "Error",
+  "SQLG0002": "Critical",
+  "SQLG0009": "Disabled"
+}

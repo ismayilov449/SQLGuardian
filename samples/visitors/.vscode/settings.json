@@ -1,0 +1,35 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "89.116.24.83",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "GPS",
+            "database": "gps_demo",
+            "username": "SuperAdmin"
+        },
+        {
+            "connectionTimeout": 15,
+            "mssqlOptions": {
+                "appName": "SQLTools",
+                "useUTC": true,
+                "encrypt": true,
+                "trustServerCertificate": true
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "10.10.10.109",
+            "port": 1433,
+            "driver": "MSSQL",
+            "name": "Kontakt Test",
+            "database": "KontaktHome",
+            "username": "sa"
+        }
+    ]
+}

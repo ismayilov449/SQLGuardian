@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>SQLGuardian.RuleEngine</RootNamespace>
+    <Description>Deterministic SQL rule engine. Detection only — no LLM calls.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SQLGuardian.Abstractions\SQLGuardian.Abstractions.csproj" />
+    <ProjectReference Include="..\SQLGuardian.Domain\SQLGuardian.Domain.csproj" />
+    <ProjectReference Include="..\SQLGuardian.ScriptDom\SQLGuardian.ScriptDom.csproj" />
+  </ItemGroup>
+
+</Project>

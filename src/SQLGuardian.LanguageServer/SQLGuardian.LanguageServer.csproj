@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>SQLGuardian.LanguageServer</RootNamespace>
+    <AssemblyName>SQLGuardian.LanguageServer</AssemblyName>
+    <Description>SQLGuardian Language Server Protocol host. Diagnostics come from RuleEngine.</Description>
+    <!-- LSP uses stdout for JSON-RPC; never write banners here. -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OmniSharp.Extensions.LanguageServer" Version="0.19.9" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SQLGuardian.RuleEngine\SQLGuardian.RuleEngine.csproj" />
+    <ProjectReference Include="..\SQLGuardian.Abstractions\SQLGuardian.Abstractions.csproj" />
+    <ProjectReference Include="..\SQLGuardian.Domain\SQLGuardian.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,17 @@
+<Project>
+  <PropertyGroup>
+    <!-- Projects may override (e.g. net9.0-windows for WPF). -->
+    <TargetFramework Condition="'$(TargetFramework)' == ''">net9.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <Authors>SQLGuardian</Authors>
+    <Product>SQLGuardian</Product>
+    <Company>SQLGuardian</Company>
+    <Copyright>Copyright (c) SQLGuardian</Copyright>
+    <SqlGuardianTargetNote>net9.0 until .NET 10 SDK is available locally</SqlGuardianTargetNote>
+  </PropertyGroup>
+</Project>

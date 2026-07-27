@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "9.0.x"
+
+      - name: Restore
+        run: dotnet restore SQLGuardian.sln
+
+      - name: Build
+        run: dotnet build SQLGuardian.sln --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test SQLGuardian.sln --configuration Release --no-build --verbosity normal
+
+      - name: CLI smoke (JSON + Markdown)
+        run: |
+          dotnet run --project src/SQLGuardian.Cli --configuration Release --no-build -- analyze samples/hello.sql --format json --fail-on never --quiet
+          dotnet run --project src/SQLGuardian.Cli --configuration Release --no-build -- analyze samples/visitors --format markdown --output "$RUNNER_TEMP/sqlguardian.md" --fail-on never --quiet
+          test -s "$RUNNER_TEMP/sqlguardian.md"

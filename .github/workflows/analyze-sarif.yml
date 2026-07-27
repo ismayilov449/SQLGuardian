@@ -1,0 +1,47 @@
+name: SQLGuardian analyze (SARIF)
+
+# Sample workflow: analyze SQL and upload SARIF to GitHub code scanning.
+# Enable code scanning on the repo (Security → Code scanning) before relying on the upload step.
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  analyze-sql:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "9.0.x"
+
+      - name: Build CLI
+        run: dotnet build src/SQLGuardian.Cli/SQLGuardian.Cli.csproj --configuration Release
+
+      - name: Analyze samples
+        continue-on-error: true
+        run: >
+          dotnet run --project src/SQLGuardian.Cli --configuration Release --no-build --
+          analyze samples
+          --format sarif
+          --output sqlguardian.sarif
+          --base-dir ${{ github.workspace }}
+          --fail-on high
+          --quiet
+
+      - name: Upload SARIF
+        if: success() || failure()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: sqlguardian.sarif
+          category: sqlguardian

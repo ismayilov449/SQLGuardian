@@ -1,0 +1,12 @@
+﻿<Application x:Class="SQLGuardian.Ssms.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Startup="OnStartup">
+  <Application.Resources>
+    <SolidColorBrush x:Key="BgBrush" Color="#F5F7FA"/>
+    <SolidColorBrush x:Key="PanelBrush" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="PanelBorderBrush" Color="#D0D7DE"/>
+    <SolidColorBrush x:Key="AccentBrush" Color="#0B6E4F"/>
+    <SolidColorBrush x:Key="TextBrush" Color="#1F2328"/>
+  </Application.Resources>
+</Application>

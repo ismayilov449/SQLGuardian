@@ -1,0 +1,93 @@
+{
+  "name": "sqlguardian",
+  "displayName": "SQLGuardian",
+  "description": "Deterministic SQL static analysis powered by SQLGuardian RuleEngine (LSP).",
+  "version": "0.5.0",
+  "publisher": "sqlguardian",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Linters",
+    "Programming Languages"
+  ],
+  "keywords": [
+    "sql",
+    "tsql",
+    "static-analysis",
+    "sqlguardian"
+  ],
+  "activationEvents": [
+    "onLanguage:sql",
+    "onCommand:sqlguardian.analyze"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "sqlguardian.analyze",
+        "title": "SQLGuardian: Analyze Active SQL Document"
+      },
+      {
+        "command": "sqlguardian.restartServer",
+        "title": "SQLGuardian: Restart Language Server"
+      }
+    ],
+    "configuration": {
+      "title": "SQLGuardian",
+      "properties": {
+        "sqlguardian.server.path": {
+          "type": "string",
+          "default": "",
+          "description": "Optional absolute path to SQLGuardian.LanguageServer.dll. Empty = bundled server/ folder or repo build output."
+        },
+        "sqlguardian.dotnet.path": {
+          "type": "string",
+          "default": "dotnet",
+          "description": "Path to the dotnet executable used to launch the language server."
+        },
+        "sqlguardian.configPath": {
+          "type": "string",
+          "default": "",
+          "description": "Optional path to sqlguardian.json rule severity overrides."
+        },
+        "sqlguardian.trace.server": {
+          "type": "string",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "default": "off",
+          "description": "Traces LSP communication between VS Code and SQLGuardian."
+        }
+      }
+    },
+    "languages": [
+      {
+        "id": "sql",
+        "extensions": [
+          ".sql"
+        ],
+        "aliases": [
+          "SQL",
+          "T-SQL"
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package --no-dependencies"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.3"
+  }
+}

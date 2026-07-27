@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>SQLGuardian.Reporting</RootNamespace>
+    <Description>Analysis report writers: JSON, SARIF, Markdown, text.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SQLGuardian.Abstractions\SQLGuardian.Abstractions.csproj" />
+    <ProjectReference Include="..\SQLGuardian.Domain\SQLGuardian.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
