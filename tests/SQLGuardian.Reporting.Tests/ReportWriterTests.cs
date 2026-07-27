@@ -85,6 +85,11 @@ public class ReportWriterTests
         var levels = run.GetProperty("results").EnumerateArray().Select(r => r.GetProperty("level").GetString()).ToArray();
         Assert.Contains("warning", levels);
         Assert.Contains("error", levels);
+
+        var tags = run.GetProperty("tool").GetProperty("driver").GetProperty("rules")[0]
+            .GetProperty("properties").GetProperty("tags");
+        Assert.Equal(JsonValueKind.Array, tags.ValueKind);
+        Assert.Contains(tags.EnumerateArray().Select(t => t.GetString()), t => t == "select");
     }
 
     [Fact]

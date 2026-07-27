@@ -17,14 +17,15 @@ jobs:
         with:
           dotnet-version: "9.0.x"
 
+      # Linux CI uses the filter that excludes Windows-only WPF / VSIX projects.
       - name: Restore
-        run: dotnet restore SQLGuardian.sln
+        run: dotnet restore SQLGuardian.Ci.slnf
 
       - name: Build
-        run: dotnet build SQLGuardian.sln --configuration Release --no-restore
+        run: dotnet build SQLGuardian.Ci.slnf --configuration Release --no-restore
 
       - name: Test
-        run: dotnet test SQLGuardian.sln --configuration Release --no-build --verbosity normal
+        run: dotnet test SQLGuardian.Ci.slnf --configuration Release --no-build --verbosity normal
 
       - name: CLI smoke (JSON + Markdown)
         run: |

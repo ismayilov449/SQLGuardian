@@ -38,10 +38,10 @@ public sealed class SarifReportWriter : IReportWriter
                     Level = ToSarifLevel(i.Severity)
                 },
                 HelpUri = $"https://github.com/sqlguardian/sqlguardian/blob/main/docs/rules/{i.RuleId}.md",
-                Properties = new Dictionary<string, string>
+                Properties = new SarifPropertyBag
                 {
-                    ["category"] = i.Category.ToString(),
-                    ["tags"] = string.Join(",", i.Tags)
+                    Category = i.Category.ToString(),
+                    Tags = i.Tags.Count == 0 ? null : i.Tags.ToList()
                 }
             })
             .ToList();
@@ -215,7 +215,14 @@ public sealed class SarifReportWriter : IReportWriter
 
         public string? HelpUri { get; init; }
 
-        public Dictionary<string, string>? Properties { get; init; }
+        public SarifPropertyBag? Properties { get; init; }
+    }
+
+    private sealed class SarifPropertyBag
+    {
+        public string? Category { get; init; }
+
+        public List<string>? Tags { get; init; }
     }
 
     private sealed class SarifReportingConfiguration

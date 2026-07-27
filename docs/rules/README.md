@@ -63,3 +63,4 @@ See any `SQLGxxxx.md` file. Every shipping rule must have a matching spec.
 See [schema-aware analysis](../schema-aware.md).
 
 Configuration sample: `rules/sqlguardian.sample.json` (keys may be rule IDs or class names; values are severities or `Disabled`).
+ 

@@ -1,0 +1,20 @@
+{
+  "solution": {
+    "path": "SQLGuardian.sln",
+    "projects": [
+      "src\\SQLGuardian.Abstractions\\SQLGuardian.Abstractions.csproj",
+      "src\\SQLGuardian.Domain\\SQLGuardian.Domain.csproj",
+      "src\\SQLGuardian.ScriptDom\\SQLGuardian.ScriptDom.csproj",
+      "src\\SQLGuardian.RuleEngine\\SQLGuardian.RuleEngine.csproj",
+      "src\\SQLGuardian.Reporting\\SQLGuardian.Reporting.csproj",
+      "src\\SQLGuardian.Schema\\SQLGuardian.Schema.csproj",
+      "src\\SQLGuardian.Cli\\SQLGuardian.Cli.csproj",
+      "src\\SQLGuardian.LanguageServer\\SQLGuardian.LanguageServer.csproj",
+      "tests\\SQLGuardian.RuleEngine.Tests\\SQLGuardian.RuleEngine.Tests.csproj",
+      "tests\\SQLGuardian.ScriptDom.Tests\\SQLGuardian.ScriptDom.Tests.csproj",
+      "tests\\SQLGuardian.Reporting.Tests\\SQLGuardian.Reporting.Tests.csproj",
+      "tests\\SQLGuardian.LanguageServer.Tests\\SQLGuardian.LanguageServer.Tests.csproj",
+      "tests\\SQLGuardian.Schema.Tests\\SQLGuardian.Schema.Tests.csproj"
+    ]
+  }
+}
